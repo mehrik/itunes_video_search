@@ -1,0 +1,53 @@
+/* This makes the whole larger */
+$size: 40%;
+$lines: 19;
+
+$line-thickness: 4px;
+
+@keyframes swirl {
+  0% { transform: translate(-50%, 50%) rotate(-45deg); }
+  50% { transform: translate(-50%, 50%) rotate(-225deg); }
+  100% { transform: translate(-50%, 50%) rotate(-45deg); }
+}
+
+html, body { height: 100%; width: 100%; }
+body { background-color: #000; }
+
+.graphic {
+  height: 90%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+    
+.dot {
+  background-color: #fff;
+  border-radius: 50%;
+  bottom: 0;
+  height: $line-thickness * 2;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, 50%);
+  width: $line-thickness * 2;
+}
+  
+.arc {
+  border-color: #fff #fff transparent transparent;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: $line-thickness;
+  bottom: 0;
+  position: absolute;
+  left: 50%;
+}
+
+@for $i from 1 through $lines {
+  $radius: ($i / $lines) * $size;
+  $delay: $i * -0.1s;
+  
+  .arc-#{$i} {
+    animation: swirl 2.5s ease-in-out $delay infinite;
+    padding-top: $radius;
+    width: $radius;
+  }
+}

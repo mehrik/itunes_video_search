@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('form').submit(function() {
+                loading();
+                $.post($(this).attr('action'), $(this).serialize(), function(res) {
+                    // console.log('This is the response object');
+                    // console.log(res);
+                    var html_string = "";
+                    if (res.results.length !== 0) {
+                        html_string = "<video controls src='" + res.results[0].previewUrl + "'><\/video>";
+                    } else {
+                        html_string = 'Nothing returned';
+                    }
+                    // console.log('The HTML string');
+                    // console.log(html_string);
+                    $('#result').html(html_string);
+
+                }, 'json');
+                return false;
+            });
+        });
+        function loading() {
+            var image = '<img src="/static/images/loading2.gif">'
+            $('#result').html(image);
+        }
+    </script>
+</head>
+<body>
+    <div id='wrapper'>
+        <form action='/main/get_video' method='POST'>
+            <h1>Enter Artist's Name:</h1>
+            <input type='search' name='user_input' id='user_input'>
+            <input type='submit' value='search' id='submit'>
+        </form>
+        <div id='result'></div>
+    </div>
+</body>
+</html>
